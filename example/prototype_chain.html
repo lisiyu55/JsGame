@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript prototype example</title>
+</head>
+
+<body>
+    <!-- <script>
+
+        Function.prototype.a = function () {
+            console.log("我是父原型Function");
+        }
+        Object.prototype.a = function () {
+            console.log("我是 父原型Object");
+        }
+        function A() {
+            this.a = "a";
+        }
+        A.prototype = {
+            B: function () {
+                console.log("b");
+            }
+        }
+        // 函数都是Function 和 Object的实列 如下：
+        console.log(A instanceof Function);  // true
+        console.log(A instanceof Object); // true
+
+        // A.prototype是一个对象，它是Object的实列，但不是Function的实列
+        console.log(A.prototype instanceof Function); // false
+        console.log(A.prototype instanceof Object); // true
+
+        // Function是Object的实列 同是Object也是Function的实列
+        console.log(Function instanceof Object);   // true
+        console.log(Object instanceof Function); // true
+
+        /*
+         * Function.prototype是Object的实列 但是Object.prototype不是Function的实列
+         * 说明Object.prototype是所有父原型的顶层
+         */
+        console.log(Function.prototype instanceof Object);  //true
+        console.log(Object.prototype instanceof Function);  // false
+    </script> -->
+
+</body>
+
+<script>
+    function AA(x) {
+        this.x = x;
+    }
+    function BB(x) {
+        this.x = x;
+    }
+    BB.prototype = new AA(11);//BB原型继承AA
+    console.log(BB.prototype.x); //11
+    console.log(BB.x); //undefined
+    // 我们再来理解原型继承和原型链的概念，代码如下，都有注释
+    function A(x) {
+        this.x = x;
+    }
+    // 在A的原型上定义一个属性x = 0
+    A.prototype.x = 0;
+    function B(x) {
+        this.x = x;
+    }
+    B.prototype = new A(1);
+    console.log(B.prototype.x); // 1
+    // 定义C的构造函数
+    function C(x) {
+        this.x = x;
+    }
+    C.prototype = new B(2);
+    console.log(C.prototype.x); // 2
+    var d = new C(3);
+    console.log(d.x); // 3
+    delete d.x;
+    console.log(d.x);  //本实例对象d.x被删掉，要从原型上去找，去找C.prototype.x  2
+    delete C.prototype.x;
+    console.log(d.x);  //本实例对象d.x被删掉，要从原型上去找，去找C.prototype.x,C.prototype.x也没有就去B.prototype找x 1
+    delete B.prototype.x;
+    console.log(d.x);  // 本实例对象d.x被删掉，要从原型上去找，去找C.prototype.x,C.prototype.x也没有就去B.prototype找x,还没有就去A的原型去找 A.prototype.x 0
+
+    // 继续删除A的原型x后 结果没有找到，就返回undefined了;
+    delete A.prototype.x;
+    console.log(d.x);  // undefined
+
+</script>
+
+</html>

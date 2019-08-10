@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Prototype example</title>
+</head>
+
+<body>
+    
+
+</body>
+
+<script>
+    function A(x) {
+        this.x = x;
+        this.setX = function(){
+            return this.x;
+        }
+        this.say = function () {
+            return this.x;
+        }
+    }
+    A.prototype.getX = function () {
+        return this.x;
+    }
+    // 实例化A
+    var a = new A(1);
+    console.log(a.x); // 1
+    console.log(a.getX()); // 输出1
+    // 现在我们来创建构造函数B，让其B继承与A，如下代码：
+    function B(x, y) {
+        this.y = y;
+        A.call(this, x);
+        this.method = function () {
+            return this.y;
+        }
+    }
+    // B.prototype = new A();  // 原型继承
+    console.log(B.prototype.constructor); // 输出构造函数A，指针指向与构造函数A
+    B.prototype.constructor = B;          // 重新设置构造函数，使之指向B
+    console.log(B.prototype.constructor); // 指向构造函数B
+    B.prototype.getY = function () {
+        return this.y;
+    }
+    var b = new B(1, 2);
+    console.log(b.x); // 1
+    console.log(b.setX()); // 1
+    console.log(b.getY()); // 2
+    console.log(a.say()); //输出1, 执行构造函数A中的say方法
+    console.log(b.say()); //输出2, 能执行该方法说明被继承了A中的方法
+    console.log(b.method()); // 输出3， 构造函数也拥有自己的方法
+    // 下面是演示对构造函数getX进行重写的方法如下：
+    B.prototype.getX = function () {
+        return this.x;
+    }
+    var b2 = new B(10, 20);
+    console.log(b2.getX());  // 输出10
+
+
+</script>
+
+</html>

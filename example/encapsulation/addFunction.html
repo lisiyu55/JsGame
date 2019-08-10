@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript prototype example</title>
+</head>
+
+<body></body>
+<script>
+    function Person(name, sal) {
+        this.name = name;         //公开
+        var sal = sal;                 //私有
+        this.showInfo = function () { //公开
+            window.alert(this.name + " " + sal);
+        }
+        function showInfo2() {      //把函数私有化
+            window.alert("你好" + this.name + " " + sal);
+        }
+    }
+    var p1 = new Person('Cece', 20, 10000);
+    window.alert(p1.name + " is " + p1.age); //Cece is undefined
+    p1.showInfo();//Cece 20
+    p1.showInfo2();//VM302:1 Uncaught TypeError: p1.showInfo2 is not a function(…)
+
+
+    function Person() {
+        this.name = "Cece";
+        var age = 18;
+        this.abc = function () {    //公开
+            window.alert("abc");
+        }
+        function abc2() {        //私有
+            window.alert("abc");
+        }
+    }
+    Person.prototype.fun1 = function () {
+        window.alert(this.name);//Cece
+        //window.alert(age);//Uncaught ReferenceError: age is not defined(…)
+        //abc2();           //Uncaught ReferenceError: abc2 is not defined(…)
+        this.abc();         //abc
+    }
+    var p1 = new Person();
+    p1.fun1();
+</script>
+
+</html>

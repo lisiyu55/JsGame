@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Object-oriented JavaScript prototype example</title>
+</head>
+
+<body>
+
+
+</body>
+
+<script>
+    // if (typeof Object.create !== 'function') {
+    //     Object.create = function (o) {
+    //         var F = new Function();
+    //         F.prototype = o;
+    //         return new F();
+    //     }
+    // }
+
+
+    // var a = {
+    //     name: 'longen',
+    //     getName: function () {
+    //         return this.name;
+    //     }
+    // };
+    // var b = {};
+    // b = Object.create(a);
+    // console.log(typeof b); //object
+    // console.log(b.name);   // longen
+    // console.log(b.getName()); // longen
+
+
+    // 先看下面的代码：
+    // 定义构造函数A，定义特权属性和特权方法
+    function A(x) {
+        this.x1 = x;
+        this.getX1 = function () {
+            return this.x1;
+        }
+    }
+    // 定义构造函数B，定义特权属性和特权方法
+    function B(x) {
+        this.x2 = x;
+        this.getX2 = function () {
+            return this.x1 + this.x2;
+        }
+    }
+    B.prototype = new A(1);
+    function C(x) {
+        this.x3 = x;
+        this.getX3 = function () {
+            return this.x3 + this.x2;
+        }
+    }
+    C.prototype = new B(2); //这句代码执行的时候, C的原型继承于B，因此C.prototype.x2 = 2; C.prototype.getX2方法且C也有自己的特权属性x3和特权方法getX3,
+    var b = new B(2);
+    var c = new C(3);
+    console.log(b.x1);  // 1
+    console.log(c.x1);  // 1
+    console.log(c.getX3()); // 5
+    console.log(c.getX2()); // 3
+    var b = new B(2);
+
+</script>
+
+</html>
