@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+}
+
+.content {
+    margin: 0 auto;
+    /* padding: 50px 100px; */
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+
+#canvas {
+    margin: 0 auto;
+    background-color: rgb(80, 84, 119);
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#canvas2 {
+    margin: 0 auto;
+    background-color: rgb(80, 84, 119);
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
